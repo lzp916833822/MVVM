@@ -1,4 +1,4 @@
-package com.vikas.paging3.repository.local
+package com.eloam.mvvm.local
 
 import androidx.room.Entity
 import androidx.room.PrimaryKey

@@ -1,11 +1,9 @@
 package com.eloam.mvvm.ui.notifications
 
-import androidx.databinding.ViewDataBinding
 import androidx.lifecycle.Observer
 import androidx.lifecycle.lifecycleScope
 import androidx.paging.ExperimentalPagingApi
 import androidx.recyclerview.widget.GridLayoutManager
-import androidx.recyclerview.widget.RecyclerView
 import com.eloam.mvvm.BR
 import com.eloam.mvvm.R
 import com.eloam.mvvm.adapter.LoaderDoggoImageAdapter
@@ -23,7 +21,6 @@ class NotificationsFragment :
     private val notificationsViewModel: NotificationsViewModel by viewModel()
     lateinit var adapter: LoaderDoggoImageAdapter
     lateinit var loaderStateAdapter: LoaderStateAdapter
-    lateinit var rvDoggoRoom: RecyclerView
 
     override fun getViewModel(): NotificationsViewModel? {
         return notificationsViewModel
@@ -55,11 +52,10 @@ class NotificationsFragment :
     }
 
     private fun setUpViews() {
-        rvDoggoRoom = binding!!.root.findViewById(R.id.rvDoggoRoom)
+        val rvDoggoRoom = getViewBinding().rvDoggoRoom
         rvDoggoRoom.layoutManager = GridLayoutManager(context, 6)
         rvDoggoRoom.adapter = adapter.withLoadStateFooter(loaderStateAdapter)
     }
-
 
 
     @ExperimentalPagingApi
@@ -70,6 +66,7 @@ class NotificationsFragment :
             }
         }
     }
+
     //call this for live data based paging
     @ExperimentalPagingApi
     private fun fetchDoggoImagesLiveData() {

@@ -9,7 +9,7 @@ import com.eloam.mvvm.local.AppDatabase
 import com.eloam.mvvm.ui.home.HomeViewModel
 import com.eloam.mvvm.ui.koin.ApiService
 import com.eloam.mvvm.ui.koin.DataRepository.Companion.DEFAULT_PAGE_INDEX
-import com.vikas.paging3.repository.local.RemoteKeys
+import com.eloam.mvvm.local.RemoteKeys
 
 import retrofit2.HttpException
 import java.io.IOException
@@ -44,6 +44,7 @@ class DoggoMediator(private val doggoApiService: ApiService, private val appData
                 }
                 val prevKey = if (page == DEFAULT_PAGE_INDEX) null else page - 1
                 val nextKey = if (isEndOfList) null else page + 1
+
                 val keys = response.map {
                     RemoteKeys(repoId = it.id, prevKey = prevKey, nextKey = nextKey)
                 }
@@ -61,7 +62,10 @@ class DoggoMediator(private val doggoApiService: ApiService, private val appData
     /**
      * this returns the page key or the final end of list success result
      */
-    suspend fun getKeyPageData(loadType: LoadType, state: PagingState<Int, HomeViewModel.DoggoImageModel>): Any? {
+    suspend fun getKeyPageData(
+        loadType: LoadType,
+        state: PagingState<Int, HomeViewModel.DoggoImageModel>
+    ): Any? {
         return when (loadType) {
             LoadType.REFRESH -> {
                 val remoteKeys = getClosestRemoteKey(state)
